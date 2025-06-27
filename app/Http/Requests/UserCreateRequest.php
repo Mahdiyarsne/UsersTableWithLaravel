@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
-class UsersUpdateRequest extends FormRequest
+class UserCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,22 @@ class UsersUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|min:2|regex:/^[\pL\s\-]+$/u',
-            'email' => 'required|email:rfc',
+            'email' => 'required|unique:users|email:rfc',
             'password' => [
                 'required',
                 Password::defaults()
             ],
-            'password_comfirmation' => 'required'
+            'password_comfirmation' => 'required',
+            'created_at' => 'required'
 
+        ];
+    }
 
+    public function messages()
+    {
+        return [
+
+            'created_at' => 'The date field cannot be blank',
         ];
     }
 }

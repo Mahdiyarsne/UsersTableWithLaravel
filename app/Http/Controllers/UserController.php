@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UsersUpdateRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -26,15 +27,21 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users/create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserCreateRequest $request)
     {
-        //
+        $inputs = $request->all();
+
+        $allData = $request->safe()->merge($inputs)->except(['_token', '_method', 'password_comfirmation']);
+
+        DB::table('users')->insert($allData);
+
+        return redirect()->route('users.index');
     }
 
     /**
