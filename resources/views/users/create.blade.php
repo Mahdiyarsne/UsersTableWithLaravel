@@ -46,7 +46,7 @@ User Index
         </div>
 
          <div class="mb-3">
-          <label for="comfirm_password" class="form-label">ConfirmPassword</label>
+          <label for="comfirm_passworde" class="form-label">ConfirmPassword</label>
           <input value="{{old('password_comfirmation')}}" name="password_comfirmation" type="password" class="form-control @error('password_comfirmation')
             is-invalid
           @enderror" id="password_comfirmation" aria-describedby="password_comfirmation">

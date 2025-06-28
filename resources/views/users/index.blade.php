@@ -12,6 +12,24 @@ User Index
 
 <h1>Users</h1> 
 
+  <div class="row mt-4 mb-4">
+    <div class="col-sm-6 ">
+      <form method="post" action="{{route('users.create.dummy')}}">
+        @csrf
+        <button type="submit" class="btn btn-primary">Create Dummy</button>
+      </form>
+    </div>
+
+     <div class="col-sm-6">
+      <form method="post" action="{{route('users.delete.dummy')}}">
+        @csrf
+         @method('DELETE')
+        <button type="submit" class="btn btn-danger">Delete All</button>
+      </form>
+    </div>
+  </div>
+
+
 <div class="row">
     <table class="table">
         <thead>
@@ -35,7 +53,13 @@ User Index
     <td>{{$user->email}}</td>
     <td>{{\Carbon\Carbon::parse($user->created_at)->diffForHumans()}}</td>
      <td><a href="{{route('users.show', $user->id)}}" class="btn btn-primary">Edit</a></td> 
-     <td><a href="{{route('users.show', $user->id)}}" class="btn btn-danger">Delete</a></td>  
+     <td>
+      <form method="post" action="{{route('users.destroy',$user->id)}}">
+        @csrf
+        @method('Delete')
+       <button class="btn btn-danger">Delete</button>
+    </form>
+  </td>  
 
 
 
@@ -48,6 +72,7 @@ User Index
       </table>
 </div>
 
+{{$users->links('partials.pagination')}}
 
 @endsection
 

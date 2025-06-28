@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
+use Faker\Factory;
+
 
 class UserController extends Controller
 {
@@ -17,7 +21,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = DB::table('users')->get();
+
+
+        //  $users = DB::select('select * from users order by id asc limit 10 offset 10');
+
+        $users = DB::table('users')->paginate(10);
 
         return view('users/index')->with('users', $users);
     }
@@ -83,6 +91,57 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::table('users')->where('id', $id)->delete();
+
+        return redirect()->back();
+    }
+
+
+    public function created_dummy_users(Request $request)
+    {
+        $fake = Factory::create();
+
+
+        for ($i = 0; $i < 100; $i++) {
+
+            DB::table('users')->insert([
+
+                'name' => $fake->name,
+                'email' => $fake->email,
+                'password' => Hash::make($fake->password(8)),
+                'email_verified_at' => now(),
+                'remember_token' => Str::random(10),
+                'created_at' => now(),
+                'updated_at' => now(),
+
+
+            ]);
+        }
+        return redirect()->back();
+
+
+        // $users = Storage::disk('public')->get('users.json');
+        // $datas = json_decode($users, true);
+        // $time = Carbon::now();
+
+        // foreach ((array)$datas  as $user) {
+        //     DB::table('users')->insertOrIgnore([
+        //         'name' => $user['name'],
+        //         'email' => $user['email'],
+        //         'password' => Hash::make($user['email']),
+        //         'created_at' => $time->addHour(),
+        //         'updated_at' => $time->addHour(),
+        //     ]);
+        // }
+
+        // return redirect()->back();
+    }
+
+
+    public function delete_dummy_users()
+    {
+        DB::table('users')->truncate();
+
+        return redirect()->back();
     }
 }
