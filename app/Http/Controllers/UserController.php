@@ -36,8 +36,10 @@ class UserController extends Controller
     public function store(UserCreateRequest $request)
     {
         $inputs = $request->all();
-
-        $allData = $request->safe()->merge($inputs)->except(['_token', '_method', 'password_comfirmation']);
+        $time = Carbon::now();
+        $allData = $request->safe()->merge($inputs)->merge([
+            'created_at' => $time
+        ])->except(['_token', '_method', 'password_comfirmation']);
 
         DB::table('users')->insert($allData);
 

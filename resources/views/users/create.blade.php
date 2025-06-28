@@ -16,7 +16,7 @@ User Index
           @csrf
        <div class="mb-3">
           <label for="name" class="form-label">Name</label>
-          <input name="name" type="text"  class="form-control @error('name')
+          <input value="{{old('name')}}" name="name" type="text"  class="form-control @error('name')
             is-invalid
           @enderror" id="name" aria-describedby="nameInput">
        
@@ -27,7 +27,7 @@ User Index
         </div>
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-          <input name="email" type="text" class="form-control @error('email')
+          <input name="email" value="{{old('email')}}" type="text" class="form-control @error('email')
             is-invalid
           @enderror" id="email" aria-describedby="emailInput">
           @error('email')
@@ -37,7 +37,7 @@ User Index
 
        <div class="mb-3">
           <label for="password" class="form-label">Password</label>
-          <input  name="password" type="password" class="form-control @error('password')
+          <input  name="password" value="{{old('password')}}" type="password" class="form-control @error('password')
             is-invalid
           @enderror" id="password" aria-describedby="passwordInput">
           @error('password')
@@ -46,8 +46,8 @@ User Index
         </div>
 
          <div class="mb-3">
-          <label for="comfirmPassword" class="form-label">ConfirmPassword</label>
-          <input name="password_comfirmation" type="password" class="form-control @error('password_comfirmation')
+          <label for="comfirm_password" class="form-label">ConfirmPassword</label>
+          <input value="{{old('password_comfirmation')}}" name="password_comfirmation" type="password" class="form-control @error('password_comfirmation')
             is-invalid
           @enderror" id="password_comfirmation" aria-describedby="password_comfirmation">
 
@@ -56,7 +56,7 @@ User Index
           @enderror
          </div>
 
-         <div class="mb-3">
+         {{-- <div class="mb-3">
           <label for="date" class="form-label">Date</label>
           <input  name="created_at" type="date"  class="form-control @error('created_at')
             is-invalid
@@ -66,7 +66,7 @@ User Index
           <div id="dateInput" class="invalid-feedback">{{$message}}</div>
             
           @enderror
-          </div>
+          </div> --}}
 
         <button type="submit" class="btn btn-primary">Create</button>
       </form>

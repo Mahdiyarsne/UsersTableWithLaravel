@@ -30,7 +30,7 @@ class UserCreateRequest extends FormRequest
                 Password::defaults()
             ],
             'password_comfirmation' => 'required',
-            'created_at' => 'required'
+            'created_at' => 'nullable'
 
         ];
     }
